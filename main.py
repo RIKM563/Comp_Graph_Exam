@@ -1,8 +1,11 @@
+import matplotlib.pyplot as plt
+
 
 def find_maxes(Xa, Xb, Xc, Ya, Yb, Yc):
-   Ymax = max(Ya, Yb, Yc)
-   Xmax = max(Xa, Xb, Xc)
-   return Ymax, Xmax
+    Ymax = max(Ya, Yb, Yc)
+    Xmax = max(Xa, Xb, Xc)
+    return Ymax, Xmax
+
 
 def point_in_triangle(Xa, Xb, Xc, Ya, Yb, Yc, x, y):
     s1 = (Xa - x) * (Yb - Ya) - (Xb - Xa) * (Ya - y)
@@ -13,11 +16,22 @@ def point_in_triangle(Xa, Xb, Xc, Ya, Yb, Yc, x, y):
     else:
         return False
 
+
 def shading(Xa, Xb, Xc, Ya, Yb, Yc):
     triangle_K = []
     Ymax, Xmax = find_maxes(Xa, Xb, Xc, Ya, Yb, Yc)
-    for y in range(1, Ymax):
-        for x in range(1, Xmax):
+    for y in range(1, Ymax+1):
+        for x in range(1, Xmax+1):
             flag = point_in_triangle(Xa, Xb, Xc, Ya, Yb, Yc, x, y)
             if flag == True:
                 triangle_K.append([x, y])
+    return triangle_K
+
+
+if __name__ == '__main__':
+    data = input()
+    data = data.split()
+    list = shading(int(data[0]), int(data[2]), int(data[4]), int(data[1]), int(data[3]), int(data[5]))
+    for i in list:
+        plt.plot(i[0], i[1], 'ro')
+    plt.show()
